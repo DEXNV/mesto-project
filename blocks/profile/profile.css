@@ -1,0 +1,22 @@
+.profile {
+    margin: 0 0 50px;
+    display: grid;
+    grid-template: 1fr / repeat(2, min-content) auto;
+    position: relative;
+    z-index: 0;
+}
+
+@media screen and (max-width: 920px) {
+    .profile {
+        margin: 0 auto 36px;
+        max-width: calc(100% - 38px);
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .profile {
+        margin: 0 auto 36px;
+        max-width: calc(100% - 38px);
+        grid-template: repeat(2, min-content) auto / 1fr;
+    }
+}

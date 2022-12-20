@@ -1,0 +1,17 @@
+.profile__add-button {
+    justify-self: right;
+    margin: auto 0 auto;
+    min-width: 150px;
+    min-height: 50px;
+    background-repeat: no-repeat;
+    background-image: url(../../../images/add-button.svg);
+}
+
+@media screen and (max-width: 680px) {
+    .profile__add-button {
+        margin: 0 auto 0;
+        min-width: 282px;
+        object-fit: cover;
+        background-image: url(../../../images/add-button-mobile.svg);
+    }
+}
