@@ -1,9 +1,11 @@
 .header {
     margin: 45px 0 40px;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 920px) {
     .header {
-        margin: 28px auto 40px;
+        margin: 28px auto 38px;
     }
 }

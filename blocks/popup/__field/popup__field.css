@@ -1,13 +1,31 @@
 .popup__field {
-    margin: 0 auto 30px;
-    width: calc(100% - 72px);
+    margin: 30px auto 0;
+    min-width: calc(100% - 72px);
     padding: 0;
     min-height: 27px;
     border: none;
-    opacity: 0.2;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #00000020;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    box-sizing: border-box;
 }
 
-.popup__field:last-of-type{
+.popup__field:first-of-type{
     margin: 0 auto 0;
+}
+
+@media screen and (max-width: 520px) {
+    .popup__field {
+        min-width: auto;
+        margin: 30px 22px 0;
+    }
+
+    .popup__field:first-of-type {
+        min-width: auto;
+        margin: 0 22px 0;
+    }
 }

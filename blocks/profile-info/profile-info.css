@@ -1,6 +1,7 @@
 .profile-info {
     display: grid;
-    grid-template: repeat(2, min-content) / repeat(2, auto);
+    position: relative;
+    grid-template: repeat(2, min-content) /  repeat(2, auto);
     column-gap: 18px;
     row-gap: 16px;
     margin: 22px 0 auto 30px;
@@ -10,6 +11,11 @@
 
 @media screen and (max-width: 680px) {
     .profile-info {
+        grid-template: repeat(2, min-content) / repeat(2, auto);
+        column-gap: 10px;
+        row-gap: 14px;
         margin: 26px 0 36px;
+        max-width: none;
+        width: 100%;
     }
 }

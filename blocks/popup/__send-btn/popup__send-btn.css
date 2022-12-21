@@ -1,0 +1,30 @@
+.popup__send-btn {
+    margin: 48px auto 5px;
+    min-width: calc(100% - 72px);
+    min-height: 50px;
+    background: #000000;
+    border: 0;
+    border-radius: 2px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+    transition: opacity .3s ease;
+}
+
+.popup__send-btn:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 520px) {
+    .popup__send-btn {
+        font-size: 14px;
+        line-height: 17px;
+        min-width: none;
+        min-height: 46px;
+        margin: 45px 22px 5px;
+    }
+}

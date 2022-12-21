@@ -13,6 +13,10 @@
 
 @media screen and (max-width: 680px) {
     .profile-info__username {
+        grid-column: 1/3;
+        position: relative;
+        margin: 0 auto 0;
+        max-height: 26px;
         font-size: 27px;
         line-height: 33px;
         text-align: center;
