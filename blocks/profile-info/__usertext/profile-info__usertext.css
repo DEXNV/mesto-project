@@ -18,6 +18,7 @@
     .profile-info__usertext {
         margin: 0 auto 0;
         width: 100%;
+        max-width: 282px;
         font-size: 14px;
         line-height: 17px;
         text-align: center;
