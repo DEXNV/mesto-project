@@ -1,5 +1,5 @@
 .popup__send-btn {
-    margin: 48px auto 5px;
+    margin: 48px auto 37px;
     min-width: calc(100% - 72px);
     min-height: 50px;
     background: #000000;
@@ -13,6 +13,8 @@
     text-align: center;
     color: #FFFFFF;
     transition: opacity .3s ease;
+    padding: 0;
+    cursor: pointer;
 }
 
 .popup__send-btn:hover {
@@ -25,6 +27,6 @@
         line-height: 17px;
         min-width: none;
         min-height: 46px;
-        margin: 45px 22px 5px;
+        margin: 45px 22px 25px;
     }
 }

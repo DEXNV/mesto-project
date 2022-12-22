@@ -1,16 +1,15 @@
 .elements__like-btn {
     margin: 30px 20px 30px 0;
     transition: opacity .2s ease-in;
+    background: none;
+    border: 0;
+    padding: 0;
     background-image: url(../../../images/like.svg);
     min-width: 22px;
     min-height: 19px;
+    cursor: pointer;
 }
 
 .elements__like-btn:hover {
     opacity: .5;
-}
-
-.elements__like-btn:active {
-    background-image: url(../../../images/like-active.svg);
-    opacity: 1;
 }

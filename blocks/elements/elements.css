@@ -15,7 +15,6 @@
 
 @media screen and (max-width: 570px) {
     .elements {
-        margin: 0 19px 48px;
         grid-template: repeat(4, 1fr) /  1fr;
     }
 }

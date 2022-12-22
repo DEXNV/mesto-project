@@ -1,14 +1,16 @@
 .profile-info__username {
     margin: 0;
-    max-height: 39px;
     min-width: 294px;
-    max-width: fit-content;
-    font-family: 'Inter';
+    max-width: 294px;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 42px;
     line-height: 48px;
     color: #FFFFFF;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden;
 }
 
 @media screen and (max-width: 680px) {
@@ -16,10 +18,11 @@
         grid-column: 1/3;
         position: relative;
         margin: 0 auto 0;
-        max-height: 26px;
         font-size: 27px;
         line-height: 33px;
         text-align: center;
-        min-width: fit-content;
+        min-width: 0;
+        width: 189px;
+        max-width: 189px;
     }
 }

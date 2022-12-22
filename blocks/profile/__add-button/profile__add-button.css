@@ -4,8 +4,12 @@
     min-width: 150px;
     min-height: 50px;
     background-repeat: no-repeat;
+    background: none;
     background-image: url(../../../images/add-button.svg);
     transition: opacity .3s ease-out;
+    padding: 0;
+    border: none;
+    cursor: pointer;
 }
 
 .profile__add-button:hover {

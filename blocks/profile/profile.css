@@ -15,8 +15,6 @@
 
 @media screen and (max-width: 680px) {
     .profile {
-        margin: 0 auto 36px;
-        max-width: calc(100% - 38px);
         grid-template: repeat(2, min-content) auto / 1fr;
     }
 }

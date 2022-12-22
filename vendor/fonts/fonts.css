@@ -16,15 +16,15 @@
 
 @font-face {
   font-family: Inter;
-    src: local("Inter-Regular.woff2"),
-      url(./Inter-Regular.woff2) format("woff2"),
-      url(./Inter-Regular.woff) format("woff");
+    src: local("Inter-Medium.woff2"),
+      url(./Inter-Medium.woff2) format("woff2"),
+      url(./Inter-Medium.woff) format("woff");
   font-weight: 500;
 }
 
 @font-face {
   font-family: Inter;
-    src: local("Inter-Bold.woff2"),
+    src: local("Inter-Black.woff2"),
       url(./Inter-Black.woff2) format("woff2"),
       url(./Inter-Black.woff) format("woff");
   font-weight: 900;

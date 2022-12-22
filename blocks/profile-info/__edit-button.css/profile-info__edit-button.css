@@ -2,6 +2,10 @@
     align-self: flex-end;
     width: 24px;
     transition: opacity .3s ease-in;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .profile-info__edit-button:hover {

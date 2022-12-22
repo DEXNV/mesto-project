@@ -2,9 +2,14 @@
     position: relative;
     display: block;
     width: 32px;
-    top: -338px;
+    height: 32px;
+    top: -376px;
     right: -438px;
     transition: opacity .3s ease-in-out;
+    background: none;
+    padding: 0;
+    border: none;
+    cursor: pointer;
 }
 
 .popup__close-btn:hover {
@@ -14,7 +19,7 @@
 @media screen and (max-width: 520px) {
     .popup__close-btn {
         width: 20px;
-        top: -338px;
+        top: -358px;
         right: calc(-100% + 19px);
     }
 }
