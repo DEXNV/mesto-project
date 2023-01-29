@@ -1,5 +1,9 @@
 .elements__image {
-    max-width: 100%;
+    border: none;
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
     border-radius: 10px 10px 0 0;
     grid-column: 1/3;
+    cursor: pointer;
 }

@@ -11,11 +11,18 @@
             <div class="popup__container">
                 <form class="popup__form-edit-profile" name="edit_profile" method="post">
                     <h3 class="popup__title">Редактировать профиль</h3>
-                    <input type="text" class="popup__field" value="Жак-Ив Кусто">
-                    <input type="text" class="popup__field" value="Исследователь океана">
+                    <input type="text" class="popup__field" id="firstFieldPopup" value="Жак-Ив Кусто">
+                    <input type="text" class="popup__field" id="secondFieldPopup" value="Исследователь океана">
                     <button type="submit" class="popup__send-btn">Сохранить</button>
                 </form>
-                <button type="button" class="popup__close-btn"><img src="./images/close-icon.svg" alt="Закрыть"></button>
+                <button type="button" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+            </div>
+        </section>
+        <section class="popup-img popup-img_opened">
+            <div>
+                <button class="popup-img__close-btn"><img class="popup-img__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+                <img class="popup-img__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg">
+                <p class="popup-img__title">fesfsdffvdgbdfdfsczdbtgdgfzdsvc xbdgfdzvfvsdcdfvxdxzg fsd fsdfA DS</p>
             </div>
         </section>
         <header class="header">
@@ -25,47 +32,18 @@
             <section class="profile">
             <img src="./images/user.jpg" class="profile__avatar" alt="Картинка профиля">
             <div class="profile-info">
-                <h1 class="profile-info__username"  >Жак-Ив Кусто</h1>
+                <h1 class="profile-info__username">Жак-Ив Кусто</h1>
                 <button class="profile-info__edit-button" type="button"></button>
                 <p class="profile-info__usertext">Исследователь океана</p>
             </div>
             <button class="profile__add-button" type="button"></button>
         </section>
         <section class="elements">
-            <div class="elements__element">
-                <img src="./images/Grid-1-img.png" class="elements__image" alt="Картинка - 1 в сетке">
-                <h3 class="elements__title">Карачаевск</h3>
-                <button class="elements__like-btn" type="button"></button>
-            </div>
-            <div class="elements__element">
-                <img src="./images/Grid-2-img.png" class="elements__image" alt="Картинка - 2 в сетке">
-                <h3 class="elements__title">Гора Эльбрус</h3>
-                <button class="elements__like-btn" type="button"></button> 
-            </div>
-            <div class="elements__element">
-                <img src="./images/Grid-3-img.png" class="elements__image" alt="Картинка - 3 в сетке">
-                <h3 class="elements__title">Домбай</h3>
-                <button class="elements__like-btn" type="button"></button> 
-            </div>
-            <div class="elements__element">
-                <img src="./images/Grid-2-img.png" class="elements__image" alt="Картинка - 2 в сетке">
-                <h3 class="elements__title">Гора Эльбрус</h3>
-                <button class="elements__like-btn" type="button"></button> 
-            </div>
-            <div class="elements__element">
-                <img src="./images/Grid-3-img.png" class="elements__image" alt="Картинка - 3 в сетке">
-                <h3 class="elements__title">Домбай</h3>
-                <button class="elements__like-btn" type="button"></button> 
-            </div>
-            <div class="elements__element">
-                <img src="./images/grid-1-img.png" class="elements__image" alt="Картинка - 1 в сетке">
-                <h3 class="elements__title">Карачаево-Черкессия</h3>
-                <button class="elements__like-btn" type="button"></button> 
-            </div>
         </section>
     </main>
         <footer class="footer">
             <h3 class="footer__copyright">© 2022 Денис Моршинин Mesto Russia</h3>
         </footer>
+    <script src="script.js"></script>
     </body>
 </html>

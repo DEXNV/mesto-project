@@ -1,0 +1,11 @@
+.popup__close-btn-cover{
+    width: 32px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 520px){
+    .popup__close-btn-cover {
+        width: 20px;
+        height: 20px;
+    }
+}

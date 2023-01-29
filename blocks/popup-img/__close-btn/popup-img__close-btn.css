@@ -1,9 +1,11 @@
-.popup__close-btn {
+.popup-img__close-btn {
     position: relative;
     display: block;
     width: 32px;
-    top: -376px;
-    right: -438px;
+    height: 32px;
+    bottom: 8px;
+    right: calc(-100% - 8px);
+    box-sizing:border-box;
     transition: opacity .3s ease-in-out;
     background: none;
     padding: 0;
@@ -11,15 +13,15 @@
     cursor: pointer;
 }
 
-.popup__close-btn:hover {
+.popup-img__close-btn:hover {
     opacity: 0.6;
 }
 
 @media screen and (max-width: 520px) {
-    .popup__close-btn {
+    .popup-img__close-btn {
         width: 20px;
         height: 20px;
-        top: -358px;
-        right: calc(-100% + 19px);
+        right: calc(-100% + 20px);
+        bottom: 16px;
     }
 }
