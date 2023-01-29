@@ -1,3 +1,56 @@
+//Функции
+
+// хз, это в методичке было написанно, думаю, чтоб вся инфа не летела при отправке формы, но у меня нет submit-ов в коде
+function handleFormSubmit(evt) {
+    evt.preventDefault(); 
+}
+
+//Функция добавления карточек + колбэки
+function addCard(cardName, cardLink) {
+    const cardContainer = document.createElement('div')
+    cardContainer.classList.add('elements__element')
+
+    const cardTrash = document.createElement('button')
+    cardTrash.classList.add('elements__trash')
+
+    const cardImage = document.createElement('img')
+    cardImage.classList.add('elements__image')
+    cardImage.src = cardLink
+    cardImage.alt = cardName
+
+    const cardTitle = document.createElement('h3')
+    cardTitle.classList.add('elements__title')
+    cardTitle.textContent = cardName
+
+    const cardLike = document.createElement('button')
+    cardLike.classList.add('elements__like-btn')
+
+    cardContainer.append(cardTrash, cardImage, cardTitle, cardLike)
+    elementsCards.prepend(cardContainer); 
+    elementsCards.querySelector('.elements__like-btn').addEventListener('click', function (evt){evt.target.classList.toggle('elements__like-btn_active');});
+
+    elementsCards.querySelector('.elements__image').addEventListener('click', function (){fullSizeImg(cardImage.alt, cardImage.src)});
+
+    cardTrash.addEventListener('click', function () {
+        this.parentElement.remove()
+    })
+}
+
+//Функция добавления карточек в DOM
+function cardsAdd(mas) {
+    
+    for (let i = 0; i !== mas.length; i++)
+    {
+        addCard(mas[i].name, mas[i].link)
+    }
+}
+
+//Функция открытия второго попапа(просмотр картинок)
+function fullSizeImg(title, img) {
+    imgPopup.classList.add('popup-img_opened')
+    imgPopupImage.src = img
+    imgPopupTitle.textContent = title 
+}
 //Константы
 
 //Профиль
@@ -124,56 +177,3 @@ imgPopupCloseBtn.addEventListener('click', function (){
 })
 
 
-//Функции
-
-// хз, это в методичке было написанно, думаю, чтоб вся инфа не летела при отправке формы, но у меня нет submit-ов в коде
-function handleFormSubmit(evt) {
-    evt.preventDefault(); 
-}
-
-//Функция добавления карточек + колбэки
-function addCard(cardName, cardLink) {
-    const cardContainer = document.createElement('div')
-    cardContainer.classList.add('elements__element')
-
-    const cardTrash = document.createElement('button')
-    cardTrash.classList.add('elements__trash')
-
-    const cardImage = document.createElement('img')
-    cardImage.classList.add('elements__image')
-    cardImage.src = cardLink
-    cardImage.alt = cardName
-
-    const cardTitle = document.createElement('h3')
-    cardTitle.classList.add('elements__title')
-    cardTitle.textContent = cardName
-
-    const cardLike = document.createElement('button')
-    cardLike.classList.add('elements__like-btn')
-
-    cardContainer.append(cardTrash, cardImage, cardTitle, cardLike)
-    elementsCards.prepend(cardContainer); 
-    elementsCards.querySelector('.elements__like-btn').addEventListener('click', function (evt){evt.target.classList.toggle('elements__like-btn_active');});
-
-    elementsCards.querySelector('.elements__image').addEventListener('click', function (){fullSizeImg(cardImage.alt, cardImage.src)});
-
-    cardTrash.addEventListener('click', function () {
-        this.parentElement.remove()
-    })
-}
-
-//Функция добавления карточек в DOM
-function cardsAdd(mas) {
-    
-    for (let i = 0; i !== mas.length; i++)
-    {
-        addCard(mas[i].name, mas[i].link)
-    }
-}
-
-//Функция открытия второго попапа(просмотр картинок)
-function fullSizeImg(title, img) {
-    imgPopup.classList.add('popup-img_opened')
-    imgPopupImage.src = img
-    imgPopupTitle.textContent = title 
-}
