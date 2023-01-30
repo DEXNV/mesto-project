@@ -5,13 +5,19 @@ const profileInfoBtn = document.querySelector('.profile-info__edit-button')
 const profileName = document.querySelector('.profile-info__username')
 const profileText = document.querySelector('.profile-info__usertext')
 
-//Попап
-const popupInfoChange = document.querySelector('.popup')
-const popupSaveBtn = document.querySelector('.popup__send-btn') //!Не использую popupInfoChange т.к короче написать так! Дальше также
-const popupCloseBtn = document.querySelector('.popup__close-btn')
-const popupTitle = document.querySelector('.popup__title')
-const firstFieldPopup = document.querySelector('#firstFieldPopup')
-const secondFieldPopup = document.querySelector('#secondFieldPopup')
+//Попап профиля
+const popupProfileInfoChange = document.querySelector('#popupProfile')
+const popupProfileSaveBtn = popupProfileInfoChange.querySelector('.popup__send-btn')
+const popupProfileCloseBtn = popupProfileInfoChange.querySelector('.popup__close-btn')
+const firstProfileFieldPopup = popupProfileInfoChange.querySelector('#firstFieldPopup')
+const secondProfileFieldPopup = popupProfileInfoChange.querySelector('#secondFieldPopup')
+
+//Попап карточек
+const popupCardsInfoChange = document.querySelector('#popupCards')
+const popupCardsSaveBtn = popupCardsInfoChange.querySelector('.popup__send-btn') 
+const popupCardsCloseBtn = popupCardsInfoChange.querySelector('.popup__close-btn')
+const firstCardsFieldPopup = popupCardsInfoChange.querySelector('#firstFieldPopup')
+const secondCardsFieldPopup = popupCardsInfoChange.querySelector('#secondFieldPopup')
 
 //Карточки 
 const elementsCards = document.querySelector('.elements')
@@ -49,50 +55,55 @@ const imgPopupCloseBtn = imgPopup.querySelector('.popup-img__close-btn')
 
 //Переменные
 
-let whatPopupSend = null
 let imgPopupImage = imgPopup.querySelector('.popup-img__image')
 let imgPopupTitle = imgPopup.querySelector('.popup-img__title')
 
 
 //Функции
 
-function openCardPopup(){
-    whatPopupSend = "newCardInfo"
-    popupInfoChange.classList.add('popup_opened');
-    popupTitle.textContent = "Новое место"
-    firstFieldPopup.value = null
-    firstFieldPopup.placeholder = "Название"
-    secondFieldPopup.value = null
-    secondFieldPopup.placeholder = "Ссылка на картинку"
-    popupInfoChange.style = "visibility: visible; opacity: 1"
+
+//Закрытие попапа
+function closePopup(popup) {
+    popup.style = ""
+    popup.classList.remove('popup_opened');
 }
 
-document.addEventListener("keydown", function(e){if (e.keyCode == 13){openCardPopup()}}); 
+//Открыте попапа
+function openPopup(popup) {
+    popup.style = "visibility: visible; opacity: 1"
+    popup.classList.add('popup_opened');
+}
 
 // хз, это в методичке было написанно, думаю, чтоб вся инфа не летела при отправке формы, но у меня нет submit-ов в коде
 function handleFormSubmit(evt) {
     evt.preventDefault(); 
 }
 
+//Функция открытия попапа карточек
+function openCardPopup(){
+    openPopup(popupCardsInfoChange)
+    firstCardsFieldPopup.value = null
+    secondCardsFieldPopup.value = null
+}
+
 //Функция добавления карточек + колбэки
 function addCard(cardName, cardLink) {
-    const cardContainer = document.createElement('div')
-    cardContainer.classList.add('elements__element')
+    let template = document.querySelector('#cardTemplate')
+    template = template.content.cloneNode(true)
 
-    const cardTrash = document.createElement('button')
-    cardTrash.classList.add('elements__trash')
+    const cardContainer = template.querySelector('.elements__element')
 
-    const cardImage = document.createElement('img')
-    cardImage.classList.add('elements__image')
+    const cardTrash = template.querySelector('.elements__trash')
+
+    const cardImage = template.querySelector('.elements__image')
+
     cardImage.src = cardLink
     cardImage.alt = cardName
 
-    const cardTitle = document.createElement('h3')
-    cardTitle.classList.add('elements__title')
+    const cardTitle = template.querySelector('.elements__title')
     cardTitle.textContent = cardName
 
-    const cardLike = document.createElement('button')
-    cardLike.classList.add('elements__like-btn')
+    const cardLike = template.querySelector('.elements__like-btn')
 
     cardContainer.append(cardTrash, cardImage, cardTitle, cardLike)
     elementsCards.prepend(cardContainer); 
@@ -114,7 +125,7 @@ function cardsAdd(mas) {
     }
 }
 
-//Функция открытия второго попапа(просмотр картинок)
+//Функция открытия попапа картинки
 function fullSizeImg(title, img) {
     imgPopup.classList.add('popup-img_opened')
     imgPopupImage.src = img
@@ -124,64 +135,52 @@ function fullSizeImg(title, img) {
 
 //Мониторинг
 
-//Отправка данных из формы и её закрытие
-popupSaveBtn.addEventListener('click', function (){
-    if ((whatPopupSend !== null) && (whatPopupSend !== undefined)){
-        if (whatPopupSend === "profileInfo") {
-            profileName.textContent = firstFieldPopup.value
-            profileText.textContent = secondFieldPopup.value
-        } else if(whatPopupSend === "newCardInfo"){
-            let cardInto = [
-            {
-                name: firstFieldPopup.value,
-                link: secondFieldPopup.value
-            }];
-            cardsAdd(cardInto)
-        }
-    }
-    
-    
-    popupInfoChange.classList.remove('popup_opened');
+//Отправка данных из попапа профиля и её закрытие
+popupProfileSaveBtn.addEventListener('click', function (){
+            profileName.textContent = firstProfileFieldPopup.value
+            profileText.textContent = secondProfileFieldPopup.value
+    closePopup(popupProfileInfoChange)    
 })
 
-//Открытие формы профиля
+//Открытие попапа профиля
 profileInfoBtn.addEventListener('click', function (){
-    whatPopupSend = "profileInfo"
-    popupInfoChange.classList.add('popup_opened');
-    popupTitle.textContent = "Редактировать профиль"
-    firstFieldPopup.value = profileName.textContent
-    secondFieldPopup.value = profileText.textContent
-    popupInfoChange.style = "visibility: visible; opacity: 1"
+    openPopup(popupProfileInfoChange)
+    firstProfileFieldPopup.value = profileName.textContent
+    secondProfileFieldPopup.value = profileText.textContent
 })
 
-//Закрытие формы профиля
-popupCloseBtn.addEventListener('click', function (){
-    popupInfoChange.classList.remove('popup_opened');
-    whatPopupSend = null
-    popupInfoChange.style = ""
+//Закрытие попапа профиля
+popupProfileCloseBtn.addEventListener('click', function (){
+    closePopup(popupProfileInfoChange)
 })
-
-
-
-//Закрытие формы карточек
-popupSaveBtn.addEventListener('click', function (){
-    
-    popupInfoChange.style = ""
-    popupInfoChange.classList.remove('popup_opened');
-})
-
-//Открытие формы карточек
-addCardsBtn.addEventListener('click', openCardPopup)
 
 //Не отправляем формы
-popupInfoChange.addEventListener('submit', handleFormSubmit); 
+document.addEventListener('submit', handleFormSubmit); 
 
 //Добавляем карточки из массива
 cardsAdd(initialCards)
 
-//Закрытие модального окна карточек
+//Закрытие попапа карточек
 imgPopupCloseBtn.addEventListener('click', function (){
     imgPopup.classList.remove('popup-img_opened')
 })
 
 
+//Открытие попапа карточек нажатием на "Enter"
+document.addEventListener("keydown", function(e){if (e.keyCode == 13){openCardPopup()}}); 
+
+//Открытие попапа карточек
+addCardsBtn.addEventListener('click', function() {
+    openCardPopup()
+})
+
+//Закрытие попапа карточек
+popupCardsCloseBtn.addEventListener('click', function() {
+    closePopup(popupCardsInfoChange)
+})
+
+//Отправка данных из попапа карточек и её закрытие
+popupCardsSaveBtn.addEventListener('click', function(){
+    closePopup(popupCardsInfoChange) 
+    addCard(firstCardsFieldPopup.value, secondCardsFieldPopup.value)
+})

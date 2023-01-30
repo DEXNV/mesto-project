@@ -7,12 +7,23 @@
         <link rel="stylesheet" href="./pages/index.css">
     </head>
     <body class="page">
-        <section class="popup">
+        <section class="popup" id="popupProfile">
             <div class="popup__container">
                 <form class="popup__form-edit-profile" name="edit_profile" method="post">
                     <h3 class="popup__title">Редактировать профиль</h3>
                     <input type="text" class="popup__field" id="firstFieldPopup" value="Жак-Ив Кусто">
                     <input type="text" class="popup__field" id="secondFieldPopup" value="Исследователь океана">
+                    <button type="submit" class="popup__send-btn">Сохранить</button>
+                </form>
+                <button type="button" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+            </div>
+        </section>
+        <section class="popup" id="popupCards">
+            <div class="popup__container">
+                <form class="popup__form-edit-profile" name="edit_profile" method="post">
+                    <h3 class="popup__title">Новое место</h3>
+                    <input type="text" class="popup__field" id="firstFieldPopup" placeholder="Ссылка на картинку">
+                    <input type="text" class="popup__field" id="secondFieldPopup" placeholder="Название">
                     <button type="submit" class="popup__send-btn">Сохранить</button>
                 </form>
                 <button type="button" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
@@ -44,6 +55,15 @@
         <footer class="footer">
             <h3 class="footer__copyright">© 2022 Денис Моршинин Mesto Russia</h3>
         </footer>
+    <template id="cardTemplate">
+        <div class="elements__element">
+            <button class="elements__trash">
+                <img class="elements__image">
+            </button>
+            <h3 class="elements__title"></h3>
+            <button class="elements__like-btn"></button>
+        </div>
+    </template>
     <script src="script.js"></script>
     </body>
 </html>
