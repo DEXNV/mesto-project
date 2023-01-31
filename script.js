@@ -81,7 +81,7 @@ function openCardPopup(){
     openPopup(popupCardsInfoChange)
 }
 
-//Функция добавления карточек + колбэки
+//Функция создания экземпляра карточки
 function addExemplCard() {
     const template = document.querySelector('#cardTemplate').content
 
@@ -90,6 +90,7 @@ function addExemplCard() {
     return cardContainer
 }
 
+//Функция создания карточки
 function cardInsertData(cardName, cardLink) {
     const card = addExemplCard()
 
@@ -186,7 +187,7 @@ popupCardsCloseBtn.addEventListener('click', function() {
 })
 
 //Отправка данных из попапа карточек и её закрытие
-popupCardsSaveBtn.addEventListener('click', function(){
+popupCardsInfoChange.addEventListener('submit', function(){
     addAndCloseCard()
 })
 
