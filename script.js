@@ -50,13 +50,10 @@ const initialCards = [
   ]; 
 
 //Модальное окно карточек
-const imgPopup = document.querySelector('.popup-img')
-const imgPopupCloseBtn = imgPopup.querySelector('.popup-img__close-btn')
-
-//Переменные
-
-let imgPopupImage = imgPopup.querySelector('.popup-img__image')
-let imgPopupTitle = imgPopup.querySelector('.popup-img__title')
+const imgPopup = document.querySelector('#imgPopup')
+const imgPopupCloseBtn = imgPopup.querySelector('.popup__img-close-btn')
+const imgPopupImage = imgPopup.querySelector('.popup__image')
+const imgPopupTitle = imgPopup.querySelector('.popup__img-title')
 
 
 //Функции
@@ -64,13 +61,11 @@ let imgPopupTitle = imgPopup.querySelector('.popup-img__title')
 
 //Закрытие попапа
 function closePopup(popup) {
-    popup.style = ""
     popup.classList.remove('popup_opened');
 }
 
 //Открыте попапа
 function openPopup(popup) {
-    popup.style = "visibility: visible; opacity: 1"
     popup.classList.add('popup_opened');
 }
 
@@ -81,72 +76,85 @@ function handleFormSubmit(evt) {
 
 //Функция открытия попапа карточек
 function openCardPopup(){
-    openPopup(popupCardsInfoChange)
     firstCardsFieldPopup.value = null
     secondCardsFieldPopup.value = null
+    openPopup(popupCardsInfoChange)
 }
 
 //Функция добавления карточек + колбэки
-function addCard(cardName, cardLink) {
-    let template = document.querySelector('#cardTemplate')
-    template = template.content.cloneNode(true)
+function addExemplCard() {
+    const template = document.querySelector('#cardTemplate').content
 
-    const cardContainer = template.querySelector('.elements__element')
+    const cardContainer = template.querySelector('.elements__element').cloneNode(true)
 
-    const cardTrash = template.querySelector('.elements__trash')
+    return cardContainer
+}
 
-    const cardImage = template.querySelector('.elements__image')
+function cardInsertData(cardName, cardLink) {
+    const card = addExemplCard()
 
+    const cardImage = card.querySelector('.elements__image')
     cardImage.src = cardLink
     cardImage.alt = cardName
 
-    const cardTitle = template.querySelector('.elements__title')
-    cardTitle.textContent = cardName
+    const cardTrash = card.querySelector('.elements__trash')
 
-    const cardLike = template.querySelector('.elements__like-btn')
+    card.querySelector('.elements__title').textContent = cardName
 
-    cardContainer.append(cardTrash, cardImage, cardTitle, cardLike)
-    elementsCards.prepend(cardContainer); 
-    elementsCards.querySelector('.elements__like-btn').addEventListener('click', function (evt){evt.target.classList.toggle('elements__like-btn_active');});
+    const cardLike = card.querySelector('.elements__like-btn')
 
-    elementsCards.querySelector('.elements__image').addEventListener('click', function (){fullSizeImg(cardImage.alt, cardImage.src)});
+    cardLike.addEventListener('click', function (evt) {evt.target.classList.toggle('elements__like-btn_active');});
 
-    cardTrash.addEventListener('click', function () {
-        this.parentElement.remove()
-    })
+    cardImage.addEventListener('click', function () {fullSizeImg(cardImage.alt, cardImage.src)});
+
+    cardTrash.addEventListener('click', function () {this.parentElement.remove()})
+
+    
+    return card
 }
 
 //Функция добавления карточек в DOM
-function cardsAdd(mas) {
+function cardInsert(mas) {
     
     for (let i = 0; i !== mas.length; i++)
     {
-        addCard(mas[i].name, mas[i].link)
+        elementsCards.prepend(cardInsertData(mas[i].name, mas[i].link)); 
     }
 }
 
 //Функция открытия попапа картинки
 function fullSizeImg(title, img) {
-    imgPopup.classList.add('popup-img_opened')
     imgPopupImage.src = img
     imgPopupTitle.textContent = title 
+    imgPopup.classList.add('popup_opened')
+}
+
+//Функция добавления и закрытия попапа карточек
+function addAndCloseCard() {
+    elementsCards.prepend(cardInsertData(firstCardsFieldPopup.value, secondCardsFieldPopup.value))
+    closePopup(popupCardsInfoChange) 
+}
+
+//Функция добавления и закрытия попапа профиля
+function addAndCloseProfile() {
+    profileName.textContent = firstProfileFieldPopup.value
+    profileText.textContent = secondProfileFieldPopup.value
+    closePopup(popupProfileInfoChange)    
 }
 
 
 //Мониторинг
 
 //Отправка данных из попапа профиля и её закрытие
-popupProfileSaveBtn.addEventListener('click', function (){
-            profileName.textContent = firstProfileFieldPopup.value
-            profileText.textContent = secondProfileFieldPopup.value
-    closePopup(popupProfileInfoChange)    
+popupProfileInfoChange.addEventListener('submit', function (){
+    addAndCloseProfile()
 })
 
 //Открытие попапа профиля
 profileInfoBtn.addEventListener('click', function (){
-    openPopup(popupProfileInfoChange)
     firstProfileFieldPopup.value = profileName.textContent
     secondProfileFieldPopup.value = profileText.textContent
+    openPopup(popupProfileInfoChange)
 })
 
 //Закрытие попапа профиля
@@ -155,19 +163,17 @@ popupProfileCloseBtn.addEventListener('click', function (){
 })
 
 //Не отправляем формы
-document.addEventListener('submit', handleFormSubmit); 
+popupProfileInfoChange.addEventListener('submit', handleFormSubmit); 
+
+popupCardsInfoChange.addEventListener('submit', handleFormSubmit); 
 
 //Добавляем карточки из массива
-cardsAdd(initialCards)
+cardInsert(initialCards)
 
 //Закрытие попапа карточек
 imgPopupCloseBtn.addEventListener('click', function (){
     imgPopup.classList.remove('popup-img_opened')
 })
-
-
-//Открытие попапа карточек нажатием на "Enter"
-document.addEventListener("keydown", function(e){if (e.keyCode == 13){openCardPopup()}}); 
 
 //Открытие попапа карточек
 addCardsBtn.addEventListener('click', function() {
@@ -181,6 +187,10 @@ popupCardsCloseBtn.addEventListener('click', function() {
 
 //Отправка данных из попапа карточек и её закрытие
 popupCardsSaveBtn.addEventListener('click', function(){
-    closePopup(popupCardsInfoChange) 
-    addCard(firstCardsFieldPopup.value, secondCardsFieldPopup.value)
+    addAndCloseCard()
+})
+
+//Закрытие попапа картинки
+imgPopupCloseBtn.addEventListener('click', function(){
+    closePopup(imgPopup)
 })

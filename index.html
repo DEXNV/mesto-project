@@ -15,7 +15,7 @@
                     <input type="text" class="popup__field" id="secondFieldPopup" value="Исследователь океана">
                     <button type="submit" class="popup__send-btn">Сохранить</button>
                 </form>
-                <button type="button" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+                <button type="submit" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
             </div>
         </section>
         <section class="popup" id="popupCards">
@@ -26,14 +26,14 @@
                     <input type="text" class="popup__field" id="secondFieldPopup" placeholder="Ссылка на картинку">
                     <button type="submit" class="popup__send-btn">Сохранить</button>
                 </form>
-                <button type="button" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+                <button type="submit" class="popup__close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
             </div>
         </section>
-        <section class="popup-img">
+        <section class="popup" id="imgPopup" onkeypress="usl(event)">
             <div>
-                <button class="popup-img__close-btn"><img class="popup-img__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
-                <img class="popup-img__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg">
-                <p class="popup-img__title">fesfsdffvdgbdfdfsczdbtgdgfzdsvc xbdgfdzvfvsdcdfvxdxzg fsd fsdfA DS</p>
+                <button class="popup__img-close-btn"><img class="popup__close-btn-cover" src="./images/close-icon.svg" alt="Закрыть"></button>
+                <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg">
+                <p class="popup__img-title"></p>
             </div>
         </section>
         <header class="header">
@@ -58,8 +58,9 @@
     <template id="cardTemplate">
         <div class="elements__element">
             <button class="elements__trash">
-                <img class="elements__image">
+                
             </button>
+            <img class="elements__image" src="/images/trash.svg">
             <h3 class="elements__title"></h3>
             <button class="elements__like-btn"></button>
         </div>
