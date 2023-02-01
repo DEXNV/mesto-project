@@ -127,7 +127,7 @@ function cardInsert(mas) {
 function fullSizeImg(title, img) {
     imgPopupImage.src = img
     imgPopupTitle.textContent = title 
-    imgPopup.classList.add('popup_opened')
+    openPopup(imgPopup)
 }
 
 //Функция добавления и закрытия попапа карточек
@@ -173,7 +173,7 @@ cardInsert(initialCards)
 
 //Закрытие попапа карточек
 imgPopupCloseBtn.addEventListener('click', function (){
-    imgPopup.classList.remove('popup-img_opened')
+    closePopup('popup-img_opened')
 })
 
 //Открытие попапа карточек
