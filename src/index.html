@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="RU">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Место</title>
+    </head>
+    <body class="page">
+        <section class="popup" id="popupProfile">
+            <div class="popup__container">
+                <form class="popup__form-edit-profile" name="edit_profile" method="post">
+                    <h3 class="popup__title">Редактировать профиль</h3>
+                    <input type="text" class="popup__field" id="firstFieldPopup" value="Жак-Ив Кусто" required minlength="2" maxlength="40" pattern="^[a-zA-Zа-ёА-Я -]+$"
+                    data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+                    <h4 class="popup__input-error" id="firstFieldPopup-error"></h4>
+                    <input type="text" class="popup__field" id="secondFieldPopup" value="Исследователь океана" required minlength="2" maxlength="200" pattern="^[a-zA-Zа-ёА-Я -]+$"
+                    data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+                    <h4 class="popup__input-error" id="secondFieldPopup-error"></h4>
+                    <button type="submit" class="popup__send-btn">Сохранить</button>
+                </form>
+                <button type="submit" class="popup__close-btn"><img class="popup__close-btn-cover" src="<%=require('./images/close-icon.svg')%>" alt="Закрыть"></button>
+            </div>
+        </section>
+        <section class="popup" id="popupCards">
+            <div class="popup__container">
+                <form class="popup__form-edit-profile" name="edit_profile" method="post">
+                    <h3 class="popup__title">Новое место</h3>
+                    <input type="text" class="popup__field" id="firstFieldPopup" placeholder="Название" required minlength="2" maxlength="30" pattern="^[a-zA-Zа-ёА-Я -]+$"
+                    data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+                    <label class="popup__input-error" id="firstFieldPopup-error"></label>
+                    <input type="url" class="popup__field" id="secondFieldPopup" placeholder="Ссылка на картинку" required>
+                    <label class="popup__input-error" id="secondFieldPopup-error"></label>
+                    <button type="submit" class="popup__send-btn popup__send-btn_type_disabled">Сохранить</button>
+                </form>
+                <button type="submit" class="popup__close-btn"><img class="popup__close-btn-cover" src="<%=require('./images/close-icon.svg')%>" alt="Закрыть"></button>
+            </div>
+        </section>
+        <section class="popup" id="imgPopup" onkeypress="usl(event)">
+            <div class="popup-img__container">
+                <button class="popup__img-close-btn"><img class="popup__close-btn-cover" src="<%=require('./images/close-icon.svg')%>" alt="Закрыть"></button>
+                <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg">
+                <p class="popup__img-title"></p>
+            </div>
+        </section>
+        <header class="header">
+            <img src="<%=require('./images/logo.svg')%>" class="header__logo" alt="Лого проекта">
+        </header>
+        <main class="main">
+            <section class="profile">
+            <img src="<%=require('./images/user.jpg')%>" class="profile__avatar" alt="Картинка профиля">
+            <div class="profile-info">
+                <h1 class="profile-info__username">Жак-Ив Кусто</h1>
+                <button class="profile-info__edit-button" type="button"></button>
+                <p class="profile-info__usertext">Исследователь океана</p>
+            </div>
+            <button class="profile__add-button" type="button"></button>
+        </section>
+        <section class="elements">
+        </section>
+    </main>
+        <footer class="footer">
+            <h3 class="footer__copyright">© 2022 Денис Моршинин Mesto Russia</h3>
+        </footer>
+    <template id="cardTemplate">
+        <div class="elements__element">
+            <button class="elements__trash"></button>
+            <img class="elements__image">
+            <h3 class="elements__title"></h3>
+            <button class="elements__like-btn"></button>
+        </div>
+    </template>
+    </body>
+</html>
