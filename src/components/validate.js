@@ -1,40 +1,40 @@
 export const enableValidation = (validate) => {
   
-    const formList = Array.from(document.querySelectorAll(validate.formSelector));
+    const formList = Array.from(document.querySelectorAll(validate.formContainer));
     formList.forEach((formElement) => {
       formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
   
       });
       
-      const fieldsetList = Array.from(formElement.querySelectorAll(validate.formContainer));
-  
-      fieldsetList.forEach((evt) => {
-        setEventListeners(evt);
-      }); 
+      setEventListeners(formElement);
     });
   
 
   function setEventListeners(formElement){
       const inputList = Array.from(formElement.querySelectorAll(validate.inputSelector));
       console.log(validate.inputSelector)
-      const buttonElement = formElement.querySelector(validate.submitButtonSelector);
+      const buttonSubmit = formElement.querySelector(validate.submitButtonSelector);
 
-      
-      toggleButtonState(inputList, buttonElement);
+      formElement.addEventListener('reset', () => {
+        setTimeout(() => {
+          toggleButtonState(inputList, buttonSubmit);
+        }, 0)
+      })
+
       inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', function () {
           checkInputValidity(formElement, inputElement);
-          toggleButtonState(inputList, buttonElement);
+          toggleButtonState(inputList, buttonSubmit);
         });
       });
   };
 
-  function toggleButtonState (inputList, buttonElement){
+  function toggleButtonState (inputList, buttonSubmit){
       if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(validate.inactiveButtonClass)
+        buttonSubmit.classList.add(validate.inactiveButtonClass)
       } else {
-        buttonElement.classList.remove(validate.inactiveButtonClass)
+        buttonSubmit.classList.remove(validate.inactiveButtonClass)
       }
   }
 
@@ -45,8 +45,10 @@ export const enableValidation = (validate) => {
       inputElement.setCustomValidity("");
   }
   if (!inputElement.validity.valid) {
+    formElement.querySelector(validate.submitButtonSelector).setAttribute('disabled', '')
       showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
+    formElement.querySelector(validate.submitButtonSelector).removeAttribute('disabled', '')
       hideInputError(formElement, inputElement);
   }
   };

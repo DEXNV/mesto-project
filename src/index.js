@@ -19,13 +19,17 @@ export const popupProfileSaveBtn = popupProfileInfoChange.querySelector('.popup_
 const popupProfileCloseBtn = popupProfileInfoChange.querySelector('.popup__close-btn')
 export const firstProfileFieldPopup = popupProfileInfoChange.querySelector('#firstFieldPopup')
 export const secondProfileFieldPopup = popupProfileInfoChange.querySelector('#secondFieldPopup')
+firstProfileFieldPopup.value = profileName.textContent
+secondProfileFieldPopup.value = profileText.textContent
 
 //Попап карточек
 export const popupCardsInfoChange = document.querySelector('#popupCards')
-const popupCardsSaveBtn = popupCardsInfoChange.querySelector('.popup__send-btn') 
+export const popupCardsSaveBtn = popupCardsInfoChange.querySelector('.popup__send-btn') 
 const popupCardsCloseBtn = popupCardsInfoChange.querySelector('.popup__close-btn')
 export const firstCardsFieldPopup = popupCardsInfoChange.querySelector('#firstFieldPopup')
 export const secondCardsFieldPopup = popupCardsInfoChange.querySelector('#secondFieldPopup')
+firstCardsFieldPopup.value = null
+secondCardsFieldPopup.value = null
 
 //Карточки 
 export const elementsCards = document.querySelector('.elements')
@@ -65,51 +69,12 @@ export const imgPopupImage = imgPopup.querySelector('.popup__image')
 export const imgPopupTitle = imgPopup.querySelector('.popup__img-title')
 
 
-//Функции
-
-function handleFormSubmit(evt) {
-    evt.preventDefault(); 
-}
-
 //Мониторинг
+
 
 //Отправка данных из попапа профиля и её закрытие
 popupProfileInfoChange.addEventListener('submit', function (){
     modal.addAndCloseProfile()
-})
-
-//Открытие попапа профиля
-profileInfoBtn.addEventListener('click', function (){
-    modal.openProfilePopup()
-})
-
-//Закрытие попапа профиля
-popupProfileCloseBtn.addEventListener('click', function (){
-    utils.closePopup(popupProfileInfoChange)
-})
-
-//Не отправляем формы
-popupProfileInfoChange.addEventListener('submit', handleFormSubmit); 
-
-popupCardsInfoChange.addEventListener('submit', handleFormSubmit); 
-
-//Добавляем карточки из массива
-cards.cardInsert(initialCards, elementsCards)
-
-//Закрытие попапа карточек
-imgPopupCloseBtn.addEventListener('click', function (){
-    utils.closePopup(imgPopup)
-})
-
-//Открытие попапа карточек
-addCardsBtn.addEventListener('click', function() {
-    modal.openCardPopup(popupCardsInfoChange)
-    popupCardsSaveBtn.classList.add('popup__send-btn_type_disabled')
-})
-
-//Закрытие попапа карточек
-popupCardsCloseBtn.addEventListener('click', function() {
-    utils.closePopup(popupCardsInfoChange)
 })
 
 //Отправка данных из попапа карточек и её закрытие
@@ -117,50 +82,30 @@ popupCardsInfoChange.addEventListener('submit', function(){
     modal.addAndCloseCard()
 })
 
-//Открытие 
-
-//Закрытие попапа картинки
-imgPopupCloseBtn.addEventListener('click', function(){
-    utils.closePopup(imgPopup)
+//Открытие попапа профиля
+profileInfoBtn.addEventListener('click', function (){
+    modal.openProfilePopup()
 })
 
-//Закрытие попапов кликом на оверлей 
-for (let i = 0; i < popups.length-1; i++){
-    popups[i].addEventListener('click', function(evt){
-        utils.closePopup(popups[i])
 
-        //Отмена всплытия из контейнера 
-        this.querySelector('.popup__container').addEventListener('click', function(evt){
-            evt.stopPropagation();
-        })
-    })
+//Добавляем карточки из массива
+cards.insertInitialCards(initialCards, elementsCards)
 
-    //Закрытие на Esc
-    document.addEventListener('keydown', function (evt) {
-        if(evt.keyCode === 27) {
-            utils.closePopup(popups[i])
-            utils.closePopup(imgPopup)
+
+//Открытие попапа карточек
+addCardsBtn.addEventListener('click', function() {
+    modal.openCardPopup(popupCardsInfoChange)
+})
+
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            utils.closePopup(popup)
         }
-    }, true);
-}
-
-//Отмена всплытия из контейнера картинок
-imgPopupContainer.addEventListener('click', function(evt){
-    evt.stopPropagation();
-})
-
-popupsContainerFields.forEach(function (evt){
-    evt.addEventListener('click', function(evt){
-        evt.stopPropagation();
+        if (evt.target.classList.contains('popup__close-btn-cover')) {
+            utils.closePopup(popup)
+        }
     })
-    
-})
-
-//Закрытие попапа картиок кликом на оверлей 
-popups.forEach(function (evt){
-    evt.addEventListener('click', function(){
-        utils.closePopup(evt)
-})
 })
 
 enableValidation({
