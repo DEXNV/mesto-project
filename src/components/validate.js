@@ -33,8 +33,10 @@ export const enableValidation = (validate) => {
   function toggleButtonState (inputList, buttonSubmit){
       if (hasInvalidInput(inputList)) {
         buttonSubmit.classList.add(validate.inactiveButtonClass)
+        buttonSubmit.setAttribute('disabled', '')
       } else {
         buttonSubmit.classList.remove(validate.inactiveButtonClass)
+        buttonSubmit.removeAttribute('disabled', '')
       }
   }
 

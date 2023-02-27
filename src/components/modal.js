@@ -1,5 +1,5 @@
 import * as utils from "./utils.js"
-import {profileName, profileText, firstProfileFieldPopup, secondProfileFieldPopup, popupProfileInfoChange, popupProfileSaveBtn, 
+import {profileName, profileText, firstProfileFieldPopup, secondProfileFieldPopup, popupProfileInfoChange, popupCardsSaveBtn, 
     elementsCards, firstCardsFieldPopup as firstfield, secondCardsFieldPopup as secondfield, imgPopupImage, imgPopupTitle} from "../index.js"
 import {insertCardData} from "./card.js"
 
@@ -22,11 +22,11 @@ export function openProfilePopup(){
 }
 
 //Функция добавления и закрытия попапа карточек
-export function addAndCloseCard() {
+export function addAndCloseCard(evt) {
     elementsCards.prepend(insertCardData(firstfield.value, secondfield.value))
-    firstfield.value = null
-    secondfield.value = null
     utils.closePopup(popupCards) 
+    popupCardsSaveBtn.setAttribute('disabled', '')
+    evt.target.reset()
 }
 
 //Функция открытия попапа карточек

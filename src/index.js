@@ -73,19 +73,13 @@ export const imgPopupTitle = imgPopup.querySelector('.popup__img-title')
 
 
 //Отправка данных из попапа профиля и её закрытие
-popupProfileInfoChange.addEventListener('submit', function (){
-    modal.addAndCloseProfile()
-})
+popupProfileInfoChange.addEventListener('submit', modal.addAndCloseProfile)
 
 //Отправка данных из попапа карточек и её закрытие
-popupCardsInfoChange.addEventListener('submit', function(){
-    modal.addAndCloseCard()
-})
+popupCardsInfoChange.addEventListener('submit', modal.addAndCloseCard)
 
 //Открытие попапа профиля
-profileInfoBtn.addEventListener('click', function (){
-    modal.openProfilePopup()
-})
+profileInfoBtn.addEventListener('click', modal.openProfilePopup)
 
 
 //Добавляем карточки из массива
@@ -112,7 +106,7 @@ enableValidation({
     formSelector: '.popup',
     formContainer: '.popup__container',
     inputSelector: '.popup__field',
-    inputError: '.popup__field_type_error',
+    inputError: 'popup__field_type_error',
     submitButtonSelector: '.popup__send-btn',
     inactiveButtonClass: 'popup__send-btn_type_disabled',
 })
