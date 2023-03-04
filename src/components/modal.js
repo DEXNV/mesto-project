@@ -1,13 +1,21 @@
 import * as utils from "./utils.js"
+import * as api from  "./api.js"
 import {profileName, profileText, firstProfileFieldPopup, secondProfileFieldPopup, popupProfileInfoChange, popupCardsSaveBtn, 
-    elementsCards, firstCardsFieldPopup as firstfield, secondCardsFieldPopup as secondfield, imgPopupImage, imgPopupTitle} from "../index.js"
+    firstCardsFieldPopup as firstfield, secondCardsFieldPopup as secondfield, imgPopupImage, imgPopupTitle, popupProfileAvatar, popupProfileSaveBtn,
+    firstProfileAvatarFieldPopup, popupProfileAvatarBtnSend} from "../index.js"
 import {insertCardData} from "./card.js"
 
 //Функция добавления и закрытия попапа профиля
 export function addAndCloseProfile() {
-    profileName.textContent = firstProfileFieldPopup.value
-    profileText.textContent = secondProfileFieldPopup.value
-    utils.closePopup(popupProfileInfoChange)    
+    popupProfileSaveBtn.textContent = "Сохранение..."
+    api.postMeOnServer(firstProfileFieldPopup.value, secondProfileFieldPopup.value)
+    .then(() => {
+        popupProfileSaveBtn.textContent = "Сохранить"
+        utils.closePopup(popupProfileInfoChange)
+    })
+    .catch((err) => {
+        console.log(err);
+    }); 
 }
 
 //Функция открытия попапа профиля
@@ -23,7 +31,10 @@ export function openProfilePopup(){
 
 //Функция добавления и закрытия попапа карточек
 export function addAndCloseCard(evt) {
-    elementsCards.prepend(insertCardData(firstfield.value, secondfield.value))
+    api.postCardOnServer(firstfield.value, secondfield.value)
+    .catch((err) => {
+        console.log(err);
+    }); 
     utils.closePopup(popupCards) 
     popupCardsSaveBtn.setAttribute('disabled', '')
     evt.target.reset()
@@ -40,4 +51,22 @@ export function openFullSizeImg(title, img) {
     imgPopupImage.alt = "Картинка " + title
     imgPopupTitle.textContent = title 
     utils.openPopup(imgPopup)
+}
+
+//Функция добавления и закрытия попапа аватара
+export function addAndCloseAvatarPopup(){
+    popupProfileAvatarBtnSend.textContent = "Сохранение..."
+    api.postMyNewAvatar(firstProfileAvatarFieldPopup.value)
+    .then(() => {
+        popupProfileAvatarBtnSend.textContent = "Сохранить"
+        utils.closePopup(popupProfileAvatar)
+    })
+    .catch((err) => {
+        console.log(err);
+    }); 
+}
+
+//Функция открытия попапа аватара
+export function openAvatarPopup(){
+    utils.openPopup(popupProfileAvatar)
 }
