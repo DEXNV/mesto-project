@@ -30,7 +30,7 @@ secondProfileFieldPopup.value = profileText.textContent
 export const popupProfileAvatar = document.querySelector('#popupProfileAvatar')
 const popupAvatarInfoChange = popupProfileAvatar.querySelector('.popup__form-edit-profile')
 export const popupProfileAvatarBtn = popupAvatarInfoChange.querySelector('.popup__close-avatar-btn')
-export const firstProfileAvatarFieldPopup = popupProfileAvatar.querySelector('#firstFieldPopup')
+export const firstProfileAvatarFieldPopup = popupAvatarInfoChange.querySelector('#firstFieldPopup')
 export const popupProfileAvatarBtnSend = popupAvatarInfoChange.querySelector('.popup__send-btn')
 
 //Попап карточек
@@ -57,11 +57,11 @@ export const imgPopupTitle = imgPopup.querySelector('.popup__img-title')
 
 Promise.all([api.getMeFromServer(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
+    profileId = userInfo._id
     profileName.textContent = userInfo.name
     profileText.textContent = userInfo.about
     profileAvatar.style.backgroundImage = "url('" + userInfo.avatar + "')"
-    firstProfileAvatarFieldPopup.textContent = userInfo.avatar
-    profileId = userInfo._id
+    firstProfileAvatarFieldPopup.value = userInfo.avatar
 
     card.insertInitialCards(cards, elementsCards)
   })
