@@ -1,0 +1,9 @@
+.profile__avatar-icon{
+    height: 120px;
+    width: 120px;
+    display: flex;
+    border-radius: 50%;
+    top: calc(50% - 13px);
+    left: calc(50% - 13px);
+    border: none;
+}

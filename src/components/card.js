@@ -2,10 +2,10 @@ import {openFullSizeImg} from "./modal.js"
 import {profileId} from "../index.js"
 import {removeCardFromServer, putLikeOnCard, removeLikeFromCard} from "./api.js"
 
+const template = document.querySelector('#cardTemplate').content
+
 //Функция создания экземпляра карточки
 export function getCard() {
-    const template = document.querySelector('#cardTemplate').content
-
     const cardContainer = template.querySelector('.elements__element').cloneNode(true)
 
     return cardContainer
@@ -16,12 +16,12 @@ export function insertCardData(cardName, cardLink, likes, owner, cardId) {
     let liked = false
     const card = getCard()
     const cardImage = card.querySelector('.elements__image')
-    cardImage.src = cardLink
+    cardImage.src = cardLink 
     cardImage.alt = "Картинка " + cardName
 
     const cardTrash = card.querySelector('.elements__trash')
 
-    if(profileId !== owner) cardTrash.style.display = "none"
+    if(profileId !== owner) cardTrash.classList.add("elements__trash_type_hidden")
 
     card.querySelector('.elements__title').textContent = cardName
 
@@ -44,18 +44,42 @@ export function insertCardData(cardName, cardLink, likes, owner, cardId) {
         if(liked)
         {
             removeLikeFromCard(cardId)
+            .then((data) => {
+                cardNum.textContent = data.likes.length
+            })
+            .catch((err) => {
+                console.log("Трабл с лайками:" + err)
+            })
+            .finally(() => {
+                liked = false
+            })
         }
         else
         {
             putLikeOnCard(cardId)
+            .then((data) => {
+                cardNum.textContent = data.likes.length
+            })
+            .catch((err) => {
+                console.log("Трабл с лайками:" + err)
+            })
+            .finally(() => {
+                liked = true
+            })
         }
     });
 
-    cardImage.addEventListener('click', function () {openFullSizeImg(cardImage.alt, cardImage.src)});
+    cardImage.addEventListener('click', function () {openFullSizeImg(cardName, cardLink)});
 
-    cardTrash.addEventListener('click', () => removeCardFromServer(cardId))
-
-    
+    cardTrash.addEventListener('click', () => {
+        removeCardFromServer(cardId)
+        .then(() => {
+            card.remove()
+        })
+        .catch((err) => {
+            console.log('Траблы с удалением:' + err + " , может, эта карточка не твоя?!")
+        })
+    })
     return card
 }
 

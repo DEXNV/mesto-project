@@ -10,11 +10,11 @@ const profileInfoBtn = document.querySelector('.profile-info__edit-button')
 export const profileName = document.querySelector('.profile-info__username')
 export const profileText = document.querySelector('.profile-info__usertext')
 const profileAvatar = document.querySelector('.profile__avatar')
+export const profileAvatarIcon = document.querySelector('.profile__avatar-icon')
 const profileEditAvatar = document.querySelector('.profile__avatar-edit')
 export let profileId 
 
 //Попапы
-const popups = document.querySelectorAll('.popup')
 const popupsContainerFields = document.querySelectorAll('.popup__form-edit-profile')
 
 //Попап профиля
@@ -60,52 +60,91 @@ Promise.all([api.getMeFromServer(), api.getInitialCards()])
     profileId = userInfo._id
     profileName.textContent = userInfo.name
     profileText.textContent = userInfo.about
-    profileAvatar.style.backgroundImage = "url('" + userInfo.avatar + "')"
-    firstProfileAvatarFieldPopup.value = userInfo.avatar
+    profileAvatarIcon.src = userInfo.avatar
 
     card.insertInitialCards(cards, elementsCards)
   })
   .catch(err => {console.log("Буллшит какой-то:" + err)})
 
 //Отправка данных из попапа профиля и её закрытие
-popupProfileInfoChange.addEventListener('submit', modal.addAndCloseProfile)
+popupProfileInfoChange.addEventListener('submit', addAndCloseProfile)
 
 //Отправка данных из попапа карточек и её закрытие
-popupCardsInfoChange.addEventListener('submit', modal.addAndCloseCard)
+popupCardsInfoChange.addEventListener('submit', addAndCloseCard)
 
 //Открытие попапа профиля
 profileInfoBtn.addEventListener('click', modal.openProfilePopup)
 
 //Изменение автара профиля (наведение курсора)
-profileEditAvatar.addEventListener('mouseover', () => {
-  profileEditAvatar.style.opacity = "1"
+profileAvatar.addEventListener('mouseover', () => {
+  profileEditAvatar.classList.add('profile__avatar-edit_type_hidden')
 })
 
 //Изменение автара профиля (снятие курсора)
-profileEditAvatar.addEventListener('mouseout', () => {
-  profileEditAvatar.style.opacity = "0"
+profileAvatar.addEventListener('mouseout', () => {
+  profileEditAvatar.classList.remove('profile__avatar-edit_type_hidden')
 })
 
 //Открытие попапа аватара
 profileEditAvatar.addEventListener('click', modal.openAvatarPopup)
 
-popupProfileAvatar.addEventListener('submit', modal.addAndCloseAvatarPopup)
+popupProfileAvatar.addEventListener('submit', addAndCloseAvatarPopup)
 
 //Открытие попапа карточек
-addCardsBtn.addEventListener('click', function() {
-    modal.openCardPopup(popupCardsInfoChange)
-})
+addCardsBtn.addEventListener('click', function() {modal.openCardPopup(popupCardsInfoChange)})
 
-popups.forEach((popup) => {
-    popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            utils.closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__close-btn-cover')) {
-            utils.closePopup(popup)
-        }
-    })
-})
+//Функция добавления и закрытия попапа профиля
+export function addAndCloseProfile(evt) {
+  evt.preventDefault()
+  popupProfileSaveBtn.textContent = "Сохранение..."
+  api.postMeOnServer(firstProfileFieldPopup.value, secondProfileFieldPopup.value)
+  .then(() => {
+      profileName.textContent = firstProfileFieldPopup.value;
+      profileText.textContent = secondProfileFieldPopup.value;
+      modal.closePopup(popupProfileInfoChange)
+  })
+  .catch((err) => {
+      console.log(err);
+  })
+  .finally(() =>{
+      popupProfileSaveBtn.textContent = "Сохранить"
+  })
+}
+
+//Функция добавления и закрытия попапа аватара
+export function addAndCloseAvatarPopup(evt){
+  evt.preventDefault()
+  popupProfileAvatarBtnSend.textContent = "Сохранение..."
+  api.postMyNewAvatar(firstProfileAvatarFieldPopup.value)
+  .then(() => {
+      profileAvatarIcon.src = firstProfileAvatarFieldPopup.value
+      modal.closePopup(popupProfileAvatar)
+  })
+  .catch((err) => {
+      console.log(err);
+  })
+  .finally(() => {
+      popupProfileAvatarBtnSend.textContent = "Сохранить"
+  })
+}
+
+//Функция добавления и закрытия попапа карточек
+export function addAndCloseCard(evt) {
+  evt.preventDefault()
+  popupCardsSaveBtn.textContent = "Сохранение..."
+  api.postCardOnServer(firstCardsFieldPopup.value, secondCardsFieldPopup.value)
+  .then((data) => {
+      elementsCards.append(card.insertCardData(firstCardsFieldPopup.value, secondCardsFieldPopup.value, data.likes, data.owner._id, data._id))
+      modal.closePopup(popupCardsInfoChange) 
+  })
+  .catch((err) => {
+      console.log(err);
+  })
+  .finally(() => {
+      popupCardsSaveBtn.setAttribute('disabled', '') 
+  })
+}
+
 
 enableValidation({
     formSelector: '.popup',

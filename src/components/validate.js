@@ -2,17 +2,12 @@ export const enableValidation = (validate) => {
   
     const formList = Array.from(document.querySelectorAll(validate.formContainer));
     formList.forEach((formElement) => {
-      formElement.addEventListener('submit', function (evt) {
-        evt.preventDefault();
-      });
-      
       setEventListeners(formElement);
     });
   
 
   function setEventListeners(formElement){
       const inputList = Array.from(formElement.querySelectorAll(validate.inputSelector));
-      console.log(validate.inputSelector)
       const buttonSubmit = formElement.querySelector(validate.submitButtonSelector);
 
       formElement.addEventListener('reset', () => {

@@ -1,48 +1,43 @@
-import * as utils from "./utils.js"
 import * as api from  "./api.js"
 import {profileName, profileText, firstProfileFieldPopup, secondProfileFieldPopup, popupProfileInfoChange, popupCardsSaveBtn, 
     firstCardsFieldPopup as firstfield, secondCardsFieldPopup as secondfield, imgPopupImage, imgPopupTitle, popupProfileAvatar, popupProfileSaveBtn,
-    firstProfileAvatarFieldPopup, popupProfileAvatarBtnSend} from "../index.js"
+    firstProfileAvatarFieldPopup, popupProfileAvatarBtnSend, profileAvatarIcon} from "../index.js"
 import {insertCardData} from "./card.js"
+export const popups = document.querySelectorAll('.popup')
+//Закрытие попапа
+export function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeByEscape);
+}
 
-//Функция добавления и закрытия попапа профиля
-export function addAndCloseProfile() {
-    popupProfileSaveBtn.textContent = "Сохранение..."
-    api.postMeOnServer(firstProfileFieldPopup.value, secondProfileFieldPopup.value)
-    .then(() => {
-        popupProfileSaveBtn.textContent = "Сохранить"
-        utils.closePopup(popupProfileInfoChange)
-    })
-    .catch((err) => {
-        console.log(err);
-    }); 
+//Открыте попапа
+export function openPopup(popup) {
+    popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closeByEscape); 
+}
+
+//Закрытие на Esc
+function closeByEscape(evt) {
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_opened')
+      closePopup(openedPopup)
+    }
 }
 
 //Функция открытия попапа профиля
 export function openProfilePopup(){
     firstProfileFieldPopup.value = profileName.textContent
     secondProfileFieldPopup.value = profileText.textContent
-    popupProfileInfoChange.querySelectorAll('.popup__field').forEach(function (evt){
-        evt.classList.remove('popup__field_type_error');
-        popupProfileInfoChange.querySelector(`#${evt.id}-error`).textContent = null
+    popupProfileInfoChange.querySelectorAll('.popup__field').forEach(function (elem){
+        elem.classList.remove('popup__field_type_error');
+        popupProfileInfoChange.querySelector(`#${elem.id}-error`).textContent = null
     });
-    utils.openPopup(popupProfileInfoChange)
-}
-
-//Функция добавления и закрытия попапа карточек
-export function addAndCloseCard(evt) {
-    api.postCardOnServer(firstfield.value, secondfield.value)
-    .catch((err) => {
-        console.log(err);
-    }); 
-    utils.closePopup(popupCards) 
-    popupCardsSaveBtn.setAttribute('disabled', '')
-    evt.target.reset()
+    openPopup(popupProfileInfoChange)
 }
 
 //Функция открытия попапа карточек
 export function openCardPopup(){
-    utils.openPopup(popupCards)
+    openPopup(popupCards)
 }
 
 //Функция открытия попапа картинки
@@ -50,23 +45,22 @@ export function openFullSizeImg(title, img) {
     imgPopupImage.src = img
     imgPopupImage.alt = "Картинка " + title
     imgPopupTitle.textContent = title 
-    utils.openPopup(imgPopup)
-}
-
-//Функция добавления и закрытия попапа аватара
-export function addAndCloseAvatarPopup(){
-    popupProfileAvatarBtnSend.textContent = "Сохранение..."
-    api.postMyNewAvatar(firstProfileAvatarFieldPopup.value)
-    .then(() => {
-        popupProfileAvatarBtnSend.textContent = "Сохранить"
-        utils.closePopup(popupProfileAvatar)
-    })
-    .catch((err) => {
-        console.log(err);
-    }); 
+    openPopup(imgPopup)
 }
 
 //Функция открытия попапа аватара
 export function openAvatarPopup(){
-    utils.openPopup(popupProfileAvatar)
+    firstProfileAvatarFieldPopup.value = null
+    openPopup(popupProfileAvatar)
 }
+
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__close-btn-cover')) {
+            closePopup(popup)
+        }
+    })
+})
