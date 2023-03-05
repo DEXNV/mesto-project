@@ -7,15 +7,17 @@ const config = {
     }
   }
 
+function getResponseData(res){
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`Опа: ${res.status}`);
+}
+
 //Получение данных о профиле
 export function getMeFromServer(){
     return fetch(config.baseUrl + "/users/me", {headers: config.headers})
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Обновление данных о профиле
@@ -27,12 +29,7 @@ export function postMeOnServer(name, about){
         name: name,
         about: about
     })})
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Обновление аватара профиля
@@ -44,12 +41,7 @@ export function postMyNewAvatar(avatar){
         avatar: avatar
     })
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Добавление карточки
@@ -62,12 +54,7 @@ export function postCardOnServer(name, about){
         link: about
     })
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Лайк на карточку
@@ -76,12 +63,7 @@ export function putLikeOnCard(cardId){
     method: 'PUT',
     headers: config.headers,
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Снятие лайка с карточки
@@ -90,12 +72,7 @@ export function removeLikeFromCard(cardId){
     method: 'DELETE',
     headers: config.headers,
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    }); 
+    .then(res => getResponseData(res)); 
 }
 
 
@@ -105,12 +82,7 @@ export function removeCardFromServer(cardId){
     method: 'DELETE',
     headers: config.headers,
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 }
 
 //Карточки
@@ -118,10 +90,6 @@ export const getInitialCards = () => {
     return fetch(`${config.baseUrl}/cards`, {
       headers: config.headers
     })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Опа: ${res.status}`);
-    });
+    .then(res => getResponseData(res));
 } 
+

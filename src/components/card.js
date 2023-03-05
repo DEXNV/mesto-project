@@ -1,5 +1,4 @@
-import {openFullSizeImg} from "./modal.js"
-import {profileId} from "../index.js"
+import {profileId, openFullSizeImg} from "../index.js"
 import {removeCardFromServer, putLikeOnCard, removeLikeFromCard} from "./api.js"
 
 const template = document.querySelector('#cardTemplate').content
@@ -40,31 +39,28 @@ export function insertCardData(cardName, cardLink, likes, owner, cardId) {
     cardNum.textContent = likes.length
 
     cardLike.addEventListener('click', function (evt) {
-        evt.target.classList.toggle('elements__like-btn_active'); 
         if(liked)
         {
             removeLikeFromCard(cardId)
             .then((data) => {
+                evt.target.classList.toggle('elements__like-btn_active'); 
                 cardNum.textContent = data.likes.length
+                liked = false
             })
             .catch((err) => {
                 console.log("Трабл с лайками:" + err)
-            })
-            .finally(() => {
-                liked = false
             })
         }
         else
         {
             putLikeOnCard(cardId)
             .then((data) => {
+                evt.target.classList.toggle('elements__like-btn_active'); 
                 cardNum.textContent = data.likes.length
+                liked = true
             })
             .catch((err) => {
                 console.log("Трабл с лайками:" + err)
-            })
-            .finally(() => {
-                liked = true
             })
         }
     });

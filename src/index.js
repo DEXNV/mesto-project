@@ -73,7 +73,7 @@ popupProfileInfoChange.addEventListener('submit', addAndCloseProfile)
 popupCardsInfoChange.addEventListener('submit', addAndCloseCard)
 
 //Открытие попапа профиля
-profileInfoBtn.addEventListener('click', modal.openProfilePopup)
+profileInfoBtn.addEventListener('click', openProfilePopup)
 
 //Изменение автара профиля (наведение курсора)
 profileAvatar.addEventListener('mouseover', () => {
@@ -86,21 +86,21 @@ profileAvatar.addEventListener('mouseout', () => {
 })
 
 //Открытие попапа аватара
-profileEditAvatar.addEventListener('click', modal.openAvatarPopup)
+profileEditAvatar.addEventListener('click', openAvatarPopup)
 
 popupProfileAvatar.addEventListener('submit', addAndCloseAvatarPopup)
 
 //Открытие попапа карточек
-addCardsBtn.addEventListener('click', function() {modal.openCardPopup(popupCardsInfoChange)})
+addCardsBtn.addEventListener('click', function() {openCardPopup(popupCardsInfoChange)})
 
 //Функция добавления и закрытия попапа профиля
 export function addAndCloseProfile(evt) {
   evt.preventDefault()
   popupProfileSaveBtn.textContent = "Сохранение..."
   api.postMeOnServer(firstProfileFieldPopup.value, secondProfileFieldPopup.value)
-  .then(() => {
-      profileName.textContent = firstProfileFieldPopup.value;
-      profileText.textContent = secondProfileFieldPopup.value;
+  .then((data) => {
+      profileName.textContent = data.name;
+      profileText.textContent = data.about;
       modal.closePopup(popupProfileInfoChange)
   })
   .catch((err) => {
@@ -116,8 +116,8 @@ export function addAndCloseAvatarPopup(evt){
   evt.preventDefault()
   popupProfileAvatarBtnSend.textContent = "Сохранение..."
   api.postMyNewAvatar(firstProfileAvatarFieldPopup.value)
-  .then(() => {
-      profileAvatarIcon.src = firstProfileAvatarFieldPopup.value
+  .then((data) => {
+      profileAvatarIcon.src = data.avatar
       modal.closePopup(popupProfileAvatar)
   })
   .catch((err) => {
@@ -134,7 +134,7 @@ export function addAndCloseCard(evt) {
   popupCardsSaveBtn.textContent = "Сохранение..."
   api.postCardOnServer(firstCardsFieldPopup.value, secondCardsFieldPopup.value)
   .then((data) => {
-      elementsCards.append(card.insertCardData(firstCardsFieldPopup.value, secondCardsFieldPopup.value, data.likes, data.owner._id, data._id))
+      elementsCards.prepend(card.insertCardData(data.name, data.link, data.likes, data.owner._id, data._id))
       modal.closePopup(popupCardsInfoChange) 
   })
   .catch((err) => {
@@ -145,6 +145,35 @@ export function addAndCloseCard(evt) {
   })
 }
 
+//Функция открытия попапа профиля
+export function openProfilePopup(){
+  firstProfileFieldPopup.value = profileName.textContent
+  secondProfileFieldPopup.value = profileText.textContent
+  popupProfileInfoChange.querySelectorAll('.popup__field').forEach(function (elem){
+      elem.classList.remove('popup__field_type_error');
+      popupProfileInfoChange.querySelector(`#${elem.id}-error`).textContent = null
+  });
+  modal.openPopup(popupProfileInfoChange)
+}
+
+//Функция открытия попапа карточек
+export function openCardPopup(){
+  modal.openPopup(popupCards)
+}
+
+//Функция открытия попапа картинки
+export function openFullSizeImg(title, img) {
+  imgPopupImage.src = img
+  imgPopupImage.alt = "Картинка " + title
+  imgPopupTitle.textContent = title 
+  modal.openPopup(imgPopup)
+}
+
+//Функция открытия попапа аватара
+export function openAvatarPopup(){
+  firstProfileAvatarFieldPopup.value = null
+  modal.openPopup(popupProfileAvatar)
+}
 
 enableValidation({
     formSelector: '.popup',
